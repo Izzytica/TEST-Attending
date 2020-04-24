@@ -68,10 +68,10 @@ startRsvpButton.addEventListener("click",
    firebase.auth().onAuthStateChanged((user)=>{
  if(user){
    startRsvpButton.textContent = "LOGOUT";
-   guestbookContainer.style.display="block";
+   //guestbookContainer.style.display="block";
  }else{
    startRsvpButton.textContent = "RSVP";
-   guestbookContainer.style.display="none";
+   //guestbookContainer.style.display="none";
  }
 });
 
@@ -108,15 +108,15 @@ function unsubscribeGuestbook(){
   }
 }
 
-rsvpYes.onClick = () => {
-  const userDoc = firebase.firestone().collection('attendees')
+rsvpYes.onclick = () => {
+  const userDoc = firebase.firestore().collection('attendees')
   .doc(firebase.auth().currentUser.uid);
   userDoc.set({
     attending: true
   }).catch(console.error);
 }
-rsvpNo.onClick = () => {
-  const userDoc = firebase.firestone().collection('attendees')
+rsvpNo.onclick = () => {
+  const userDoc = firebase.firestore().collection('attendees')
   .doc(firebase.auth().currentUser.uid);
   userDoc.set({
     attending: false
@@ -126,6 +126,8 @@ firebase.firestore()
 .collection('attendees')
 .where("attending", "==", true)
 .onSnapshot(snap => {
+
+  console.log(snap);
  const newAttendeeCount = snap.docs.length;
 
  numberAttending.innerHTML = newAttendeeCount+' people going'; 
